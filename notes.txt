@@ -1,0 +1,37 @@
+
+SCENE SCHEMA
+
+_id             int - primary key
+label           charfield - dev use only
+description     textfield
+background      image
+
+
+SCENE NODE SCHEMA
+
+_id             int - primary key
+label           charfield - dev use only
+displayText     textfield
+scene           foreign key - link to scene
+
+
+
+CHOICE SCHEMA
+
+_id             int - primary key
+scene           foreign key - link to scene node
+priority        int - order by index for displaying
+canRepeat       bool - set to false if can't be used multiple times
+buttonText      charfield - text to display on input
+condition       ??
+hideOnConditionFail  bool - is it just greyed out or missing entirely when you fail the skill check?
+resultText     textfield
+resultLink      int - set to -1 for null, otherwise choose which scene it teleports you to
+
+
+EVENT SCHEMA
+
+_id             int - primary key
+choice          foreign key - link to choice
+eventType       charfield - match to list of constants
+eventValue      int

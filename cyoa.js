@@ -1,5 +1,6 @@
 let playerMoney = 0;
 let playerChoicesUsed = [
+    // {scene: 0, _id: 0},
 ];
 let currentScene = {};
 let currentChoice = 0;
@@ -43,7 +44,8 @@ const gameScenes = [
     {
         _id: 0,
         label: "Prologue",
-        displayText: "You awaken in the middle of a forest with no idea of how you got there.",
+        displayText: "You awaken in the middle of a forest with no idea of how you got there. It looks to be midday. You see a man-made road with a sign indicating the presence of a nearby town.",
+        backgroundImage: "background-000.jpg",
         choices: [
             {
                 _id: 0,
@@ -51,7 +53,7 @@ const gameScenes = [
                 displayText: "Look around for clues.",
                 condition: true,
                 hideOnConditionFail: false,
-                resultText: "You search the ground around you. Oh look, you found 40 bucks!",
+                resultText: "You search the ground around you. Nothing to help make sense of your situation, but oh look, you found 40 bucks!",
                 resultLink: -1, // -1 to stay on current area
                 resultEvents: [
                     { type: 'MODIFY_MONEY', value: 40}
@@ -60,7 +62,7 @@ const gameScenes = [
             {
                 _id: 1,
                 canRepeat: false,
-                displayText: "Start walking in a random direction.",
+                displayText: "Begin following the road.",
                 condition: true,
                 hideOnConditionFail: false,
                 resultText: "You begin walking in the direction of the nearest town.",
@@ -68,18 +70,29 @@ const gameScenes = [
             }
         ]
     },
+
     {
         _id: 1,
         label: "On the Road to Town",
         displayText: "You begin walking on the road when something exciting happens.",
+        backgroundImage: "background-001.jpg",
         choices: [
             {
                 _id: 0,
                 canRepeat: false,
                 displayText: "Keep Walking",
-                condition: true
+                condition: true,
+                hideOnConditionFail: false,
+                resultText: "You begin to quicken your pace. Looks like an ugly storm cloud on the horizon, hopefully you can find an inn before it rains.",
+                resultLink: 2
             }
         ]
+    },
+    {
+        _id: 2,
+        label: "Town Outskirts",
+        displayText: "You begin walking on the road when something exciting happens.",
+        backgroundImage: "background-002.jpg",
     }
 ]
 
@@ -95,6 +108,7 @@ const RenderScene = (sceneId) => {
     $('#sceneChoices').empty()
     $('#sceneChoiceResult').empty()
     $('#sceneContinueBtn').hide().prop('disabled', true);
+    $('#sceneBackground').css('background-image', `url('images/${scene.backgroundImage}')`);
 
     scene.choices.forEach(choice => {
         let passCondition = choice.condition;
