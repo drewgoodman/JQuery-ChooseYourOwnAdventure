@@ -1,4 +1,23 @@
 
+
+DATABASE TABLES NEEDED
+
+Campaign - mostly for organization, the actual self-contained story module. Indicates the starting scene node.
+Scene - also mostly for organization, group by location
+Scene Node - the actual content hubs, includes display text and is the link for choices, events, and investigation points
+Scene SubNode - points of examination - appears in the list of choices for the scene and then 
+
+Choice - linked to scene node directly, contains data for whether it should appear at all, if it can be selected multiple times, etc., and includes button text and icon reference and what kind of event to fire off
+
+EventChoice - linked to choice, calls a specific Event, contains an order position to determine order they fire in
+
+Event - 
+
+EventParam - linked to even, contains position,
+
+Conditional - reference for a choi
+
+
 SCENE SCHEMA
 
 _id             int - primary key

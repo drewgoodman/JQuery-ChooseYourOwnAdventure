@@ -2,6 +2,9 @@ let playerMoney = 0;
 let playerChoicesUsed = [
     // {scene: 0, _id: 0},
 ];
+let playerScenesVisited = [
+    // { _id: 0 }
+]
 let currentScene = {};
 let currentChoice = 0;
 let queuedSceneId = 0;
@@ -40,11 +43,29 @@ const RunGameEvent = (eventQueued) => {
 
 }
 
+const CheckGameCondition = () => {
+
+    const conditionList = [
+        'EVALUATE_MONEY',
+        'EVALUATE_ITEM',
+        'SKILL_CHECK'
+    ]
+
+    switch(type) {
+
+        case('EVALUATE_MONEY'):
+            
+        default:
+            break;
+    }
+}
+
 const gameScenes = [
     {
         _id: 0,
         label: "Prologue",
         displayText: "You awaken in the middle of a forest with no idea of how you got there. It looks to be midday. You see a man-made road with a sign indicating the presence of a nearby town.",
+        displayTextVisited: "You are still in the middle of the forest.",
         backgroundImage: "background-000.jpg",
         choices: [
             {
@@ -103,8 +124,17 @@ const RenderScene = (sceneId) => {
         currentScene = scene
         queuedSceneId = -1;
     }
+
+    let sceneText = scene.displayText
+    
+    if (playerScenesVisited.includes(scene._id)) {
+        if (scene.displayTextVisited) { sceneText = scene.displayTextVisited; } 
+    } else {
+        playerScenesVisited.push(scene._id);
+    }
+
     $('#sceneLabel').text(scene.label);
-    $('#sceneDisplay').text(scene.displayText);
+    $('#sceneDisplay').text(sceneText);
     $('#sceneChoices').empty()
     $('#sceneChoiceResult').empty()
     $('#sceneContinueBtn').hide().prop('disabled', true);

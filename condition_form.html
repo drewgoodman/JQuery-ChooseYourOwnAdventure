@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Own Adventure</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="cyoa.js"></script>
+    <link rel='stylesheet' href='styles/main.css' type="text/css">
+</head>
+
+<body>
+    <h1>Make A Condition:</h1>
+    <form data-condition-id="1">
+        <div data-id="1">
+            <select name="condition-1-type" id="condition-1-type" class="condition-type" data-condition-id="1">
+                <option value="">None</option>
+                <option value="EVALUATE_MONEY">Player money is...</option>
+                <option value="EVALUATE_ITEM">Player item...</option>
+                <option value="EVALUATE_SKILL">Player skill...</option>
+            </select>
+            <div class="condition-params" data-condition-id="1">
+            </div>
+        </div>
+        <div data-id="2">
+            <select name="condition-2-type" id="condition-2-type" class="condition-type" data-condition-id="2">
+                <option value="">None</option>
+                <option value="EVALUATE_MONEY">Player money is...</option>
+                <option value="EVALUATE_ITEM">Player item...</option>
+                <option value="EVALUATE_SKILL">Player skill...</option>
+            </select>
+            <div class="condition-params" data-condition-id="2">
+            </div>
+        </div>
+
+    </form>
+</body>
+
+<script>
+
+    const clearParams = (div) => {
+        div.empty()
+    }
+
+    const buildOptions = (optionList, div) => {
+        optionList.forEach(option => {
+            var value = option[0];
+            var text = option[1];
+            var option = $("<option></option>", {
+                "value": value
+            }).append(text);
+            div.append(option);
+        })
+    }
+
+    $("select").change(function () {
+
+        dataId = $(this).data("condition-id")
+        conditionType = $(this).val();
+        paramsDiv = $(`.condition-params[data-condition-id='${dataId}'`);
+
+        clearParams(paramsDiv)
+
+        switch(conditionType) {
+
+            case "EVALUATE_MONEY":
+                var compareParam = $("<select></select>", {
+                    "name": `condition-${dataId}-compare`,
+                    "id": `condition-${dataId}-compare`,
+                    "class": "condition-param param-compare"
+                });
+                var options = [
+                    ["==", "=="],
+                    [">=", ">="],
+                    ["<=", "<="],
+                    [">", ">"],
+                    ["<", "<"],
+                    ["!=", "!="],
+                ]
+                var valueParam = $("<input></input>", {
+                    "name": `condition-${dataId}-value`,
+                    "id": `condition-${dataId}-value`,
+                    "class": "condition-param param-value",
+                    "type": "number"
+                });
+                paramsDiv.append(compareParam).append(valueParam);
+                buildOptions(options, compareParam)
+                break
+
+            case "EVALUATE_ITEM":
+                break
+
+            case "EVALUATE_SKILL":
+                break
+
+            case "":
+                break
+
+            default:
+                break
+        }
+    })
+</script>
+
+</html>
